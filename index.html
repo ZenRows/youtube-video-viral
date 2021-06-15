@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>How Does a YouTube Video Go Viral - Demo by ZenRows</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+
+    <link
+      rel="stylesheet"
+      href="https://www.unpkg.com/tailwindcss@2.1.4/dist/tailwind.min.css"
+      integrity="sha512-2x3sObNVbtxF++/xI9Rj0kqptCr1uNghrcoSzzVnWIkN4OBpP3NqBLR3+ezvzAVOtGKaWiy//TkdDF+SWseCSA=="
+      crossorigin=""
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/prismjs@1.23.0/themes/prism.css"
+      integrity="sha512-jtWR3pdYjGwfw9df601YF6uGrKdhXV37c+/6VNzNctmrXoO0nkgHcS03BFxfkWycOa2P2Nw9Y9PCT9vjG9jkVg=="
+      crossorigin=""
+    />
+
+    <script
+      src="https://unpkg.com/prismjs@1.23.0/prism.js"
+      integrity="sha512-S2+nGI85suJO7CXXZDiu8ygn+SOGUddvdqa2qu04j2D11jSOjWw8sA9n7EDX95J6aZnQImsqDuO/ItqCrwWDCg=="
+      crossorigin=""
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/luxon@1.27.0/build/global/luxon.min.js"
+      integrity="sha256-cJnCTPRTD3OUjTD4Ml0WEMsmTiLl71arKaZ9DEZJk0o="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2/dist/chart.min.js"
+      integrity="sha256-qoN08nWXsFH+S9CtIq99e5yzYHioRHtNB9t2qy1MSmc="
+      crossorigin=""
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.0.0/dist/chartjs-adapter-luxon.min.js"
+      integrity="sha256-q8w2Mgq36OwAFKLLbdSi+aCHAb6WJhIswZ7N6k+xsf0="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"
+      integrity="sha256-qXBd/EfAdjOA2FGrGAG+b3YBn2tn5A6bhz+LSgYD96k="
+      crossorigin=""
+    ></script>
+  </head>
+
+  <body>
+    <main class="my-10 lg:my-14 xl:my-16 max-w-6xl mx-auto px-4 sm:px-6">
+      <h1 class="text-3xl tracking-tight leading-tight font-extrabold text-gray-900 sm:text-4xl lg:text-5xl mb-8">How Does a YouTube Video Go Viral</h1>
+
+      <p class="font-medium my-6 text-xl text-gray-700">
+        This is an example dataset of Youtube videos extracted from a ZenRows task,
+        <a class="hover:text-blue-700 text-blue-600" href="https://app.zenrows.com/register">try it for free</a>.
+      </p>
+
+      <p class="font-medium my-6 text-base text-gray-600">
+        This data was extracted and plugged here with <strong>minimum effort</strong>. The original dataset contains more fields that were
+        not needed here and many more entries, so we removed them. But there is no need, you can use the with the original file and the
+        remaining fields will be ignored. Just be careful with the size since it can freeze your browser.
+      </p>
+
+      <h2 class="text-xl tracking-tight leading-tight font-extrabold text-gray-900 sm:text-2xl lg:text-3xl my-8 sm:my:12">
+        Views count per hour
+      </h2>
+
+      <canvas id="yt-chart1" class="my-8 max-h-screen w-full" width="800" height="800"></canvas>
+
+      <h2 class="text-xl tracking-tight leading-tight font-extrabold text-gray-900 sm:text-2xl lg:text-3xl my-8 sm:my:12">
+        Latest videos by PewDiePie
+      </h2>
+
+      <canvas id="yt-chart2" class="my-8 max-h-screen w-full" width="800" height="800"></canvas>
+
+      <h2 class="text-xl tracking-tight leading-tight font-extrabold text-gray-900 sm:text-2xl lg:text-3xl my-8 sm:my:12">
+        Channel views per day
+      </h2>
+
+      <canvas id="yt-chart3" class="my-8 max-h-screen w-full" width="800" height="800"></canvas>
+
+      <h2 class="text-xl tracking-tight leading-tight font-extrabold text-gray-900 sm:text-2xl lg:text-3xl my-8 sm:my:12">
+        Daily views per video by PewDiePie
+      </h2>
+
+      <canvas id="yt-chart4" class="my-8 max-h-screen w-full" width="800" height="800"></canvas>
+
+      <h2 class="text-xl tracking-tight leading-tight font-extrabold text-gray-900 sm:text-2xl lg:text-3xl my-8 sm:my:12">
+        How does it work
+      </h2>
+
+      <p class="font-medium mt-6 text-base text-gray-600">
+        There are two main parts: <strong>the dataset and the chart</strong>.<br />
+        The data comes from a separate file: <code>data.jsonp</code>. You can get a different dataset and modifying that file, the
+        <strong>chart should adjust automatically</strong>. To get new data you will need at least all the values present in the original
+        but the channel Id.
+      </p>
+
+      <pre class="language-javascript"><code class="language-javascript">// data is defined in the data.jsonp file
+
+dataConfig.dataset =
+// drop your JSON below this line
+[
+    {
+        channelName: "✿ Kids Diana Show",
+        title: "Diana and Roma Cheer Up Baby Oliver with Music",
+        videoId: "SqiyEsUBe4o",
+        viewCount: 172723,
+        date: 162289398009
+    },
+    ...
+];</code></pre>
+
+      <pre class="language-javascript"><code class="language-javascript">// variables to handle all the info in the dataset
+
+var dataConfig = {
+    maxViewCountFirstView: 500000, // avoid old videos
+    minViewCount: 1000000, // not to show an overwhelming amount of entries
+    minVideos: 8, // filter out channels with few videos
+    channelNameToFilter: "PewDiePie", // channel to filter for 2nd and 4th charts
+    numberLastVideosForChannelViewsPerDay: 15, // for the 3rd chart
+    minDateForChannelViewsPerDay: 1622930400000, // avoid partial days
+    numberLastVideosForAllChannelVideos: 8 // for the 4th chart
+};</code></pre>
+
+      <p class="font-medium mt-8 text-base text-gray-600">
+        The other part, the chart, should not be modified even after data changes.<br />
+        Just to understand how it works, we are using chart.js and luxon, with chartjs-adapter-luxon.
+      </p>
+      <p class="font-medium mt-2 text-base text-gray-600">
+        Each of the charts is done differently but the idea remains. Take the original data, group and filter it, create a dataset and pass
+        it to the chart constructor.<br />
+        The first two are line charts and the last ones bar charts,but the same principles apply.
+      </p>
+
+      <p class="font-medium mt-10 text-base text-gray-600 sm:mt-16">
+        Created using <a class="hover:text-blue-700 text-blue-600" href="https://www.chartjs.org">Chart.js</a>,
+        <a class="hover:text-blue-700 text-blue-600" href="https://moment.github.io/luxon">Luxon</a> and
+        <a class="hover:text-blue-700 text-blue-600" href="https://github.com/chartjs/chartjs-adapter-luxon">chartjs-adapter-luxon</a>.
+        Thanks to all of them for working hard on open-source. 🙏
+      </p>
+    </main>
+
+    <footer>
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="md:flex md:items-center md:justify-between py-4 md:py-8 border-t border-gray-200">
+          <div class="text-sm text-gray-600 mr-4">© 2021 ZenRows, Inc. All rights reserved.</div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      var dataConfig = {
+        maxViewCountFirstView: 500000,
+        minViewCount: 1000000,
+        minVideos: 8,
+        channelNameToFilter: 'PewDiePie',
+        numberLastVideosForChannelViewsPerDay: 15,
+        minDateForChannelViewsPerDay: 1622930400000,
+        numberLastVideosForAllChannelVideos: 8,
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        if (!window.dataConfig || !Array.isArray(dataConfig.dataset)) {
+          console.error('Please review you data.jsonp file');
+          return;
+        }
+
+        mapYT1();
+        mapYT2();
+        mapYT3();
+        mapYT4();
+      });
+
+      function mapYT1() {
+        var ctx = document.getElementById('yt-chart1').getContext('2d');
+        if (!ctx) {
+          console.error('There is a problem with the canvas node');
+          return;
+        }
+
+        var maxLength = 0;
+        var colorGenerator = getColorGenerator();
+        var dataByVideo = getDataGroupedByVideo();
+        var datasets = dataByVideo.map(function (data) {
+          var { channelName, title } = data[0];
+          var color = colorGenerator();
+          maxLength = Math.max(data.length, maxLength);
+          return {
+            label: channelName + ' - ' + truncate(title),
+            backgroundColor: color,
+            borderColor: color,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4,
+            pointRadius: 2,
+            data: data.map(function (v) {
+              return v.viewCount;
+            }),
+          };
+        });
+
+        var config = {
+          type: 'line',
+          data: {
+            labels: Array.from(Array(maxLength).keys()).map(formatHours),
+            datasets,
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: {
+                grid: {
+                  display: false,
+                },
+              },
+              y: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: 'Views',
+                },
+              },
+            },
+          },
+        };
+
+        new Chart(ctx, config);
+      }
+
+      function mapYT2() {
+        var ctx = document.getElementById('yt-chart2').getContext('2d');
+        if (!ctx) {
+          console.error('There is a problem with the canvas node');
+          return;
+        }
+
+        var maxLength = 0;
+        var colorGenerator = getColorGenerator();
+        var dataByVideo = getDataGroupedByVideo(true);
+        var datasets = dataByVideo.map(function (data) {
+          var { channelName, title } = data[0];
+          var color = colorGenerator();
+
+          maxLength = Math.max(data.length, maxLength);
+          return {
+            label: channelName + ' - ' + truncate(title),
+            backgroundColor: color,
+            borderColor: color,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4,
+            pointRadius: 2,
+            data: data.map(function (video) {
+              return {
+                x: video.date,
+                y: video.viewCount,
+              };
+            }),
+          };
+        });
+
+        var config = {
+          type: 'line',
+          data: {
+            datasets,
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: {
+                type: 'time',
+                time: {
+                  unit: 'day',
+                  tooltipFormat: 'DD T',
+                },
+                grid: {
+                  display: false,
+                },
+              },
+              y: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: 'Views',
+                },
+              },
+            },
+          },
+        };
+
+        new Chart(ctx, config);
+      }
+
+      function mapYT3() {
+        var ctx = document.getElementById('yt-chart3').getContext('2d');
+        if (!ctx) {
+          console.error('There is a problem with the canvas node');
+          return;
+        }
+
+        var channelViewsPerDay = {};
+        var byChannel = _.groupBy(dataConfig.dataset, 'channelName');
+        _.map(byChannel, function (channel, channelName) {
+          var t = _.uniqBy(channel, 'videoId');
+          var ids = _.map(_.slice(t, -dataConfig.numberLastVideosForChannelViewsPerDay), v => v.videoId);
+          var videos = _.filter(channel, v => ids.includes(v.videoId) && v.date >= dataConfig.minDateForChannelViewsPerDay);
+          var videosGrouped = _.groupBy(videos, 'videoId');
+
+          var acc = {};
+          _.map(videosGrouped, function (videosById) {
+            var vByDay = _.groupBy(videosById, formatVideoDate);
+            var days = {};
+            var prevDay;
+            var prevViewCount = 0;
+            _.map(vByDay, function (videos, day) {
+              var viewCount = _.minBy(videos, 'date').viewCount || 0;
+              if (prevDay) {
+                days[prevDay] = viewCount - prevViewCount;
+              }
+              days[day] = (_.maxBy(videos, 'date').viewCount || 0) - viewCount;
+
+              prevViewCount = viewCount;
+              prevDay = day;
+            });
+
+            acc = _.mergeWith(acc, days, function (a = 0, b = 0) {
+              return a + b;
+            });
+          });
+          channelViewsPerDay[channelName] = acc;
+        });
+
+        var colorGenerator = getColorGenerator();
+        var labels = _.uniq(
+          _.reduce(
+            channelViewsPerDay,
+            function (acc, c) {
+              acc.push(Object.keys(c));
+              return acc;
+            },
+            []
+          )
+            .flat()
+            .sort()
+        );
+        var datasets = _.map(channelViewsPerDay, function (data, channelName) {
+          var color = colorGenerator();
+
+          return {
+            label: channelName,
+            backgroundColor: color,
+            borderColor: color,
+            data: _.map(labels, function (day) {
+              return data[day] || 0;
+            }),
+          };
+        });
+
+        var config = {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets,
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: {
+                grid: {
+                  display: false,
+                },
+              },
+              y: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: 'Views',
+                },
+              },
+            },
+          },
+        };
+
+        new Chart(ctx, config);
+      }
+
+      function mapYT4() {
+        var ctx = document.getElementById('yt-chart4').getContext('2d');
+        if (!ctx) {
+          console.error('There is a problem with the canvas node');
+          return;
+        }
+
+        var datasets = [];
+        var colorGenerator = getColorGenerator();
+        var allVideos = _.filter(dataConfig.dataset, { channelName: dataConfig.channelNameToFilter });
+        var uniqVideosById = _.uniqBy(allVideos, 'videoId');
+        var ids = _.map(_.slice(uniqVideosById, -dataConfig.numberLastVideosForAllChannelVideos), v => v.videoId);
+        var videos = _.filter(allVideos, v => ids.includes(v.videoId));
+        var allDates = _.uniqBy(dataConfig.dataset, formatVideoDate).map(formatVideoDate);
+        var videoListById = _.groupBy(videos, 'videoId');
+        _.map(videoListById, function (videosById, videoId) {
+          var videosByDate = _.groupBy(videosById, formatVideoDate);
+          var viewCountByDate = _.reduce(
+            videosByDate,
+            function (acc, v, date) {
+              acc[date] = _.maxBy(v, 'viewCount').viewCount - _.minBy(v, 'viewCount').viewCount;
+              return acc;
+            },
+            allDates.reduce((acc, date) => {
+              acc[date] = 0;
+              return acc;
+            }, {})
+          );
+
+          datasets.push({
+            label: truncate(videosById[0].title),
+            backgroundColor: colorGenerator(),
+            data: viewCountByDate,
+          });
+        });
+
+        var config = {
+          type: 'bar',
+          data: {
+            datasets,
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: {
+                grid: {
+                  display: false,
+                },
+                stacked: true,
+              },
+              y: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: 'Views',
+                },
+                stacked: true,
+              },
+            },
+          },
+        };
+
+        new Chart(ctx, config);
+      }
+
+      function getDataGroupedByVideo(filterByChannelName = false) {
+        var dataByVideo = _.groupBy(dataConfig.dataset, 'videoId');
+        _.map(dataByVideo, videoList => {
+          if (
+            !videoList[0].viewCount ||
+            videoList[0].viewCount > dataConfig.maxViewCountFirstView ||
+            _.last(videoList).viewCount < dataConfig.minViewCount ||
+            videoList.length < dataConfig.minVideos ||
+            (filterByChannelName && videoList[0].channelName !== dataConfig.channelNameToFilter)
+          ) {
+            delete dataByVideo[videoList[0].videoId];
+          }
+
+          return videoList;
+        });
+
+        return Object.values(dataByVideo);
+      }
+
+      function getColorGenerator() {
+        var colors = [
+          '#03045e',
+          '#94d2bd',
+          '#48cae4',
+          '#bb3e03',
+          '#ade8f4',
+          '#4d908e',
+          '#d9ed92',
+          '#577590',
+          '#003049',
+          '#7400b8',
+          '#00FFC5',
+          '#c73a57',
+          '#ADF5FF',
+          '#9FFFCB',
+          '#0075A2',
+          '#D55672',
+          '#78C0E0',
+          '#F39B6D',
+          '#F4AFB4',
+          '#7AE582',
+        ];
+        return function () {
+          return colors.pop() || '#' + Math.random().toString(16).substr(2, 6);
+        };
+      }
+
+      function formatVideoDate(video) {
+        return luxon.DateTime.fromMillis(video.date).toFormat('yyyy-MM-dd');
+      }
+
+      function truncate(input, limit = 18) {
+        return input.length > limit ? `${input.substring(0, limit)}…` : input;
+      }
+
+      function formatHours(initialHours) {
+        const days = ~~(initialHours / 24);
+        const hours = ~~(initialHours % 24);
+
+        return `${days ? `${days}d ` : ''}${hours / 2}h`;
+      }
+    </script>
+    <script src="data.jsonp"></script>
+  </body>
+</html>
