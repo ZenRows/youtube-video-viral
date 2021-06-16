@@ -26,7 +26,7 @@ For **people with data or content**, export or transform them as JSON. [MySQL](h
 
 ### How to collect online data
 
-We implement a **no-code solution** for those of you that have great ideas but no data. You can several URLs to get content from, and we will extract structured data and store it in any format, like JSON, for you. So give it a try in [ZenRows](https://app.zenrows.com/register).
+We implement a **no-code solution** for those of you that have great ideas but no data. You can several URLs to get content from, and we will extract structured data and store it in any format, like JSON, for you. So give it a try in [ZenRows](https://app.zenrows.com/register?task=youtube).
 
 We generated data for this with a simple recurrent task that **extracts data from several YouTube channels every 30 minutes**. It runs every time in just a few seconds.
 
